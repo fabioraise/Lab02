@@ -7,6 +7,7 @@ package it.polito.tdp.alien;
 
 
 import java.net.URL;
+import java.util.*;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -47,14 +48,31 @@ public class AlienController {
     void doTranslate(ActionEvent event) {
     	String contenuto = txtWord.getText();
     	if(contenuto.contains(" ")) {
+    		
+    		// memorizzo la parola aliena
     		String alienWord = contenuto.substring(0, contenuto.indexOf(" "));
-    		String translation = contenuto.substring(contenuto.indexOf(" ")+1, contenuto.length());
-    		dic.addWord(alienWord, translation);
+    		contenuto = contenuto.substring(contenuto.indexOf(" ")+1, contenuto.length());
+    		
+    		// memorizzo in una lista tutte le possibili traduzioni fintanto che ci sono spazi nella stringa
+    		List<String> translations = new ArrayList<String>();
+    		while(contenuto.contains(" ")) {
+    			translations.add(contenuto.substring(0, contenuto.indexOf(" ")));
+    			contenuto = contenuto.substring(contenuto.indexOf(" ")+1, contenuto.length());
+    		}
+    		// aggiungo l'ultima parola la cui stringa è rimasta senza spazi
+    		translations.add(contenuto.substring(0, contenuto.length()));
+    		
+    		// inserisco la parola nel dizionario
+    		dic.addWord(alienWord, translations);
+    		
     	}
     	else {
     		txtResult.clear();
-    		if(dic.translateWord(contenuto) != null)
-    			txtResult.appendText(dic.translateWord(contenuto));
+    		if(dic.translateWord(contenuto) != null) {
+    			List<String> traduzioni = dic.translateWord(contenuto);
+    			for(String w : traduzioni)
+    				txtResult.appendText(w+"\n");
+    		}
     		else
     			txtResult.appendText(String.format("La parola '%s' non è presente nel dizionario\n", contenuto));
     	}

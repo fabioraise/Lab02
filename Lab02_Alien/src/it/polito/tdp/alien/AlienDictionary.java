@@ -4,30 +4,31 @@ import java.util.*;
 
 public class AlienDictionary {
 	
-	private List<Word> dizionario;
+	private List<WordEnhanced> dizionario;
 	
 	public AlienDictionary() {
-		dizionario = new LinkedList<Word>();
+		dizionario = new LinkedList<WordEnhanced>();
 	}
 	
-	public void addWord(String alienWord, String translation) {
+	public void addWord(String alienWord, List<String> translations) {
 		alienWord = alienWord.toLowerCase();
-		translation = translation.toLowerCase();
-		for(Word w : dizionario) {
-			if(w.getAlienWord().equals(alienWord)) {
-				w.setTranslation(translation);
+		for(String s : translations)
+			s = s.toLowerCase();
+		for(WordEnhanced we : dizionario) {
+			if(we.getAlienWord().equals(alienWord)) {
+				we.setTranslations(translations);
 				return;
 			}
 		}
-		Word w = new Word(alienWord, translation);
-		dizionario.add(w);
+		WordEnhanced we = new WordEnhanced(alienWord, translations);
+		dizionario.add(we);
 	}
 	
-	public String translateWord(String alienWord) {
+	public List<String> translateWord(String alienWord) {
 		alienWord = alienWord.toLowerCase();
-		for(Word w : dizionario) {
-			if(w.getAlienWord().equals(alienWord))
-				return w.getTranslation();
+		for(WordEnhanced we : dizionario) {
+			if(we.getAlienWord().equals(alienWord))
+				return we.getTranslations();
 		}
 		
 		return null;

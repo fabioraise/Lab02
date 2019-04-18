@@ -68,7 +68,17 @@ public class AlienController {
     	}
     	else {
     		txtResult.clear();
-    		if(dic.translateWord(contenuto) != null) {
+    		if(contenuto .contains("?")) {
+    			List<WordEnhanced> paroleAliene = dic.translateWordWildcard(contenuto);
+    			if(paroleAliene != null) {
+    				for(WordEnhanced we : paroleAliene) {
+    					List<String> traduzioni = dic.translateWord(we.getAlienWord());
+    	    			for(String w : traduzioni)
+    	    				txtResult.appendText(w+"\n");
+    				}
+    			}
+    		}
+    		else if(dic.translateWord(contenuto) != null) {
     			List<String> traduzioni = dic.translateWord(contenuto);
     			for(String w : traduzioni)
     				txtResult.appendText(w+"\n");

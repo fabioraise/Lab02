@@ -64,4 +64,12 @@ public class WordEnhanced {
 	}
 	
 	
+	public boolean matches(String alienWild) {
+		if(this.alienWord.matches(alienWild))
+			return true;
+		else
+			return false;
+	}
+	
+	
 }

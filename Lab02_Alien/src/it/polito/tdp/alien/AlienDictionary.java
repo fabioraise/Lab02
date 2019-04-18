@@ -34,6 +34,25 @@ public class AlienDictionary {
 		return null;
 	}
 	
+	public List<WordEnhanced> translateWordWildcard(String alienWord) {
+		alienWord = alienWord.replaceAll("\\?", ".").toLowerCase();
+		List<WordEnhanced> foundAlienWords = new ArrayList<WordEnhanced>(); 
+		
+		int matchNumber = 0;
+		
+		// utilizzo le regex
+		for(WordEnhanced we : dizionario) {
+			if(we.matches(alienWord)) {
+				foundAlienWords.add(we);
+				++matchNumber;
+			}
+		}
+		
+		if(matchNumber != 0)
+			return foundAlienWords;
+		else
+			return null;
+	}
 	
 	public void clearDictionary() {
 		dizionario.clear();
